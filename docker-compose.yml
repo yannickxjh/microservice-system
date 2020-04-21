@@ -8,13 +8,11 @@ services:
     ticket:
         build: ./ticket_order
         depends_on: 
-            - db
+            - ticket_db
     user:
         build: ./user
         depends_on:
-            - db
-    db:
-            - ticket_db
+            - user_db
     payment_db:
         image: mysql:latest
         restart: always
