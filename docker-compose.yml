@@ -1,6 +1,9 @@
 version: '3.3'
 
 services: 
+    ticket:
+        build: ./ticker_order
+        depends_on: db
     db:
         image: mysql:latest
         restart: always
