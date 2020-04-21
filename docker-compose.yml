@@ -1,11 +1,27 @@
 version: '3.3'
 
 services: 
+    payment:
+        build: ./payment
+        depends_on: 
+            - payment_db
     ticket:
         build: ./ticket_order
         depends_on: 
-            - db
-    db:
+            - ticket_db
+    payment_db:
+        image: mysql:latest
+        restart: always
+        environment: 
+            MYSQL_DATA_BASE: 'db'
+            MYSQL_USER: 'user'
+            MYSQL_PASSWORD: '1234'
+            MYSQL_ROOT_PASSWORD: '1234'
+        ports:
+            - '3002:3002'
+        volumes: 
+            - my-db:/var/lib/mysql
+    ticket_db:
         image: mysql:latest
         restart: always
         environment: 
