@@ -37,12 +37,25 @@ Get informations of a specific user<br/>
 
 - **PATCH user/:id**:
 Update user funds<br/>
-`id` representing a user id<br>
+`id` representing a user id<br/>
 `body: { funds: x (number) }`
 
 - **DELETE user/:id**:
 Delete an user<br/>
 `id` representing a user id
+
+### Payment
+- **GET payement**:
+Get all payment informations
+
+- **POST payement/order**:
+Create a new payment with the status `onWaiting`<br/>
+`body: { userId: x (number), ticketId: x (number), price: x (number) }`
+
+- **POST payement/:id**
+Change the status of the order depending on the `funds` of the user (`Accepted`, `Rejected`)<br/>
+`id` representing an order id<br/>
+`body: { funds: x (number) }`
 
 ## Database
 
