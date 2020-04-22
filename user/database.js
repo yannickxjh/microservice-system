@@ -1,20 +1,18 @@
 var knex = require('knex')({
-    client: 'mysql',
-    connection: {
-      host : 'user_db',
-      user : 'user',
-      password : '1234',
-      database : 'myapp_test'
-    }
-  });
+  client: 'pg',
+  connection: {
+    host: 'localhost',
+    database: 'postgres'
+  }
+});
 
-  knex.schema.hasTable('users').then(exists => {
-    if (!exists) {
-      return knex.schema.createTable('users', function(t) {
-        t.increments('id').primary();
-        t.integer('funds');
-      });
-    }
-  });
+knex.schema.hasTable('users').then(exists => {
+  if (!exists) {
+    return knex.schema.createTable('users', function (t) {
+      t.increments('id').primary();
+      t.integer('funds');
+    });
+  }
+});
 
-    module.exports = knex
+module.exports = knex
