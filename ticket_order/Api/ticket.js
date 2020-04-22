@@ -14,8 +14,22 @@ router.post('/ticket', (req, res) => {
     })
 })
 
-router.put('/ticket/order', (req, res) => {
-    ticketId = req.body.ticketId
+router.get('/ticket/:id', (req, res) => {
+    const ticketId = req.params.id
+
+    if (isNaN(ticketId)) {
+        return res.status(400).send({ error: `Invalid ticket: ${ticketId}` })
+    }
+    knex('ticket').where('id', ticketId).then(ticket => {
+        if (!ticket.length) {
+            return res.status(400).send({ error: `Invalid ticket: ${ticketId}` })
+        }
+        res.status(200).send(ticket[0])
+    })
+})
+
+router.post('/ticket/:id', (req, res) => {
+    ticketId = req.params.id
     userId = req.body.userId
 
     if (isNaN(ticketId)) {
@@ -29,24 +43,13 @@ router.put('/ticket/order', (req, res) => {
         } else if (ticket[0].status === 'Reserved') {
             return res.status(400).send({ error: `Already reserved: ${ticketId}`})
         }
+        console.log(ticket[0])
         knex('ticket')
             .update({ reservedBy: userId, status: 'Reserved' })
             .where('id', ticketId)
-        res.status(200).send({ ticketId: ticketId })
-    })
-})
-
-router.get('/ticket/:id', (req, res) => {
-    const ticketId = req.params.id
-
-    if (isNaN(ticketId)) {
-        return res.status(400).send({ error: `Invalid ticket: ${ticketId}` })
-    }
-    knex('ticket').where('id', ticketId).then(ticket => {
-        if (!ticket.length) {
-            return res.status(400).send({ error: `Invalid ticket: ${ticketId}` })
-        }
-        res.status(200).send(ticket[0])
+            .then(() => {
+                res.status(200).send({ ticketId: ticketId })
+            })
     })
 })
 
