@@ -4,7 +4,6 @@ const knex = require('../database')
 
 router.get('/ticket', (req, res) => {
     knex.select().from('ticket').then(result => {
-        console.log(result)
         res.status(200).send(result)
     })
 })
@@ -27,8 +26,8 @@ router.put('/ticket/order', (req, res) => {
     knex('ticket').where('id', ticketId).then(ticket => {
         if (!ticket.length) {
             return res.status(400).send({ error: `Invalid ticket: ${ticketId}` })        
-        } else if (ticket.status === 'Reserved') {
-            return res.status(200).send()
+        } else if (ticket[0].status === 'Reserved') {
+            return res.status(400).send({ error: `Already reserved: ${ticketId}`})
         }
         knex('ticket')
             .update({ reservedBy: userId, status: 'Reserved' })
