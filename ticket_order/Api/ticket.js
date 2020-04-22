@@ -17,7 +17,7 @@ router.post('/ticket/order', (req, res) => {
     //     .then(id => {
             
     //     })
-    res.status(200).send({ succes: id })
+    res.status(200).send({ succes: 'Success' })
 })
 
 module.exports = router
