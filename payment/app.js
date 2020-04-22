@@ -7,6 +7,11 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+const payement = require('./Api/payement')
+app.use('/', payement)
+
+
+
 app.listen(PORT, () => {
     console.log('Server launch start on port' + PORT)
 })

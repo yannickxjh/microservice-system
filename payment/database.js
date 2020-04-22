@@ -8,11 +8,13 @@ var knex = require('knex')({
     }
   });
 
-  knex.schema.hasTable('users').then(exists => {
+  knex.schema.hasTable('payement').then(exists => {
     if (!exists) {
-      return knex.schema.createTable('users', function(t) {
+      return knex.schema.createTable('payement', function(t) {
         t.increments('id').primary();
-        t.integer('funds');
+        t.integer('ticketId');
+        t.integer('userId');
+        t.string('status');
       });
     }
   });
