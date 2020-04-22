@@ -3,11 +3,11 @@
 ## API
 
 ## Database
-### Ticket Order
-id bookingId userId status
+### Ticket
+id  stock  price
 
 ### User
-id name
+id  fund
 
 ### Payment
-id bookingId status
+id  ticketId  userId  status
