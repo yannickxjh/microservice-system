@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const knex = require('../database')
+//const knex = require('../database')
 
 router.get('/ticket/:id', (req, res) => {
     knex.select().from('ticket').then(result => {
