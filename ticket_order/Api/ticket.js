@@ -11,12 +11,13 @@ router.get('/ticket/:id', (req, res) => {
 router.post('/ticket/order', (req, res) => {
     const user = req.body.userId
 
-    knex('ticket')
-        .returning('id')
-        .insert([{ userId: user }, { status: 'onWaiting' }])
-        .then(id => {
-            res.status(200).send({ succes: id })
-        })
+    // knex('ticket')
+    //     .returning('id')
+    //     .insert([{ userId: user }, { status: 'onWaiting' }])
+    //     .then(id => {
+            
+    //     })
+    res.status(200).send({ succes: id })
 })
 
 module.exports = router
