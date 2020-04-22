@@ -2,12 +2,12 @@ const express = require('express')
 const router = express.Router()
 const knex = require('../database')
 
-router.post('/user/update/funds', (req, res) => {
+router.patch('/user/update/funds', (req, res) => {
     const user = req.body.userId
     const newBalance = req.body.balance
 
     if (newBalance >= 0) {
-        knex('user')
+        knex('users')
             .where({ userId: user })
             .update({funds: newBalance})
         res.status(200).send({ status: "Ok"})
@@ -19,12 +19,24 @@ router.post('/user/update/funds', (req, res) => {
 router.get('/user/funds', (req, res) => {
     const user = req.header.userId
 
-    knex('user')
+    knex('users')
         .where({ userId: user})
         .returning('funds')
         .then(user => {
             res.status(200).send({ status: Ok}, { userId: user })
         })
+})
+
+router.post('/user', (req, res) => {
+    const userFund = req.body.funds
+
+    if (isNaN(userFund)) {
+        return res.status(400).send({ error: `Invalid amount of funds: ${userFund}` })
+    }
+    knex('users')
+        .insert({ funds: userFund })
+
+    res.status(201).send()
 })
 
 module.exports = router
