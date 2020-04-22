@@ -14,6 +14,9 @@ router.post('/ticket/order', (req, res) => {
     knex('ticket')
         .returning('id')
         .insert([{ userId: user }, { status: 'onWaiting' }])
+        .then(id => {
+            res.status(200).send({ succes: id })
+        })
 })
 
 module.exports = router
