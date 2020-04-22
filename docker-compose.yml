@@ -1,54 +1,56 @@
 version: '3.3'
 
 services: 
-    payment:
-        build: ./payment
-        depends_on: 
-            - payment_db
-    ticket:
-        build: ./ticket_order
-        depends_on: 
-            - ticket_db
-    user:
-        build: ./user
-        depends_on:
-            - user_db
-    payment_db:
+    # payment:
+    #     build: ./payment
+    #     depends_on: 
+    #         - payment_db
+    # ticket:
+    #     build: ./ticket_order
+    #     depends_on: 
+    #         - ticket_db
+    # user:
+    #     build: ./user
+    #     depends_on:
+    #         - user_db
+    paymentdb:
         image: mysql:latest
         restart: always
         environment: 
             MYSQL_DATA_BASE: 'db'
             MYSQL_USER: 'user'
             MYSQL_PASSWORD: '1234'
-            MYSQL_ROOT_PASSWORD: '1234'
+            MYSQL_ROOT_PASSWORD: 'root'
         ports:
-            - '3002:3002'
+            - '3002:3001'
         volumes: 
-            - my-db:/var/lib/mysql
-    ticket_db:
+            - mysql_payment:/var/lib/mysql
+    ticketdb:
         image: mysql:latest
         restart: always
         environment: 
             MYSQL_DATA_BASE: 'db'
             MYSQL_USER: 'user'
             MYSQL_PASSWORD: '1234'
-            MYSQL_ROOT_PASSWORD: '1234'
+            MYSQL_ROOT_PASSWORD: 'root'
         ports:
             - '3001:3001'
         volumes: 
-            - my-db:/var/lib/mysql
-    user_db:
+            - mysql_ticket:/var/lib/mysql
+    userdb:
         image: mysql:latest
         restart: always
         environment: 
             MYSQL_DATA_BASE: 'db'
             MYSQL_USER: 'user'
             MYSQL_PASSWORD: '1234'
-            MYSQL_ROOT_PASSWORD: '1234'
+            MYSQL_ROOT_PASSWORD: 'root'
         ports:
-            - '3003:3003'
+            - '3003:3001'
         volumes: 
-            - my-db:/var/lib/mysql
+            - mysql_user:/var/lib/mysql
     
 volumes: 
-    my-db:
+    mysql_payment:
+    mysql_ticket:
+    mysql_user:

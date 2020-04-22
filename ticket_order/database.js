@@ -1,10 +1,11 @@
 var knex = require('knex')({
     client: 'mysql',
     connection: {
-      host : 'ticket_db',
-      user : 'user',
-      password : '1234',
-      database : 'db'
+      host: 'localhost',
+      port: '3001',
+      user: 'user',
+      password: 'root',
+      database: 'db'
     }
 });
 
