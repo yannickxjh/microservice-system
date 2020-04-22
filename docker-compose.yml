@@ -1,56 +1,51 @@
-version: '3.3'
+version: '3'
 
 services: 
     # payment:
     #     build: ./payment
     #     depends_on: 
     #         - payment_db
-    # ticket:
-    #     build: ./ticket_order
-    #     depends_on: 
-    #         - ticket_db
+    ticket:
+        build: ./ticket_order
+        restart: always
+        depends_on: 
+            - ticketdb
     # user:
     #     build: ./user
     #     depends_on:
     #         - user_db
-    paymentdb:
-        image: mysql:latest
-        restart: always
-        environment: 
-            MYSQL_DATA_BASE: 'db'
-            MYSQL_USER: 'user'
-            MYSQL_PASSWORD: '1234'
-            MYSQL_ROOT_PASSWORD: 'root'
-        ports:
-            - '3002:3001'
-        volumes: 
-            - mysql_payment:/var/lib/mysql
+    # paymentdb:
+    #     image: postgres
+    #     restart: always
+    #     environment:
+    #         POSTGRES_DB: 'payment'
+    #         POSTGRES_PASSWORD: 'root'
+    #     ports:
+    #         - '5431:5431'
+    #     volumes: 
+    #         - postgres_payment:/var/lib/postgres
     ticketdb:
-        image: mysql:latest
-        restart: always
-        environment: 
-            MYSQL_DATA_BASE: 'db'
-            MYSQL_USER: 'user'
-            MYSQL_PASSWORD: '1234'
-            MYSQL_ROOT_PASSWORD: 'root'
+        image: postgres
+        environment:
+            POSTGRES_DB: 'ticket'
+            POSTGRES_USER: 'postgres'
+            POSTGRES_PASSWORD: '1234'
         ports:
-            - '3001:3001'
+            - '5432:5432'
         volumes: 
-            - mysql_ticket:/var/lib/mysql
-    userdb:
-        image: mysql:latest
-        restart: always
-        environment: 
-            MYSQL_DATA_BASE: 'db'
-            MYSQL_USER: 'user'
-            MYSQL_PASSWORD: '1234'
-            MYSQL_ROOT_PASSWORD: 'root'
-        ports:
-            - '3003:3001'
-        volumes: 
-            - mysql_user:/var/lib/mysql
+            - ticket-data:/var/lib/postgresql/data
+    # userdb:
+    #     image: postgres
+    #     restart: always
+    #     environment:
+    #         POSTGRES_DB: 'users'
+    #         POSTGRES_PASSWORD: 'root'
+    #     ports:
+    #         - '5433:5433'
+    #     volumes: 
+    #         - postgres_user:/var/lib/postgres
     
 volumes: 
-    mysql_payment:
-    mysql_ticket:
-    mysql_user:
+    postgres_payment:
+    ticket-data:
+    postgres_user:
