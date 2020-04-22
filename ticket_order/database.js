@@ -19,15 +19,13 @@ var knex = require('knex')({
 
 knex.schema.hasTable('ticket').then(exist => {
     if (!exist) {
-        console.log("CREATE")
         return knex.schema.createTable('ticket', t => {
-            t.increments('id').primary().unique()
-            t.integer('bookingId')
-            t.integer('userId')
+            t.increments('id').primary()
+            t.integer('reservedBy')
             t.string('status')
+            t.float('price')
         })
     }
-    console.log("EXIST")
 })
 
 module.exports = knex
