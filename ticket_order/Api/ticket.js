@@ -4,7 +4,6 @@ const knex = require('../database')
 
 router.get('/ticket', (req, res) => {
     knex.select().from('ticket').then(result => {
-        console.log(result)
         res.status(200).send(result)
     })
 })
@@ -12,28 +11,6 @@ router.get('/ticket', (req, res) => {
 router.post('/ticket', (req, res) => {
     knex('ticket').insert({ status: 'Available', price: 10. }, 'id').then(id => {
         res.status(201).send({ id: id[0] })
-    })
-})
-
-router.put('/ticket/order', (req, res) => {
-    ticketId = req.body.ticketId
-    userId = req.body.userId
-
-    if (isNaN(ticketId)) {
-        return res.status(400).send({ error: `Invalid ticket: ${ticketId}` })        
-    } else if (isNaN(userId)) {
-        return res.status(400).send({ error: `Invalid userId: ${userId}` })
-    }
-    knex('ticket').where('id', ticketId).then(ticket => {
-        if (!ticket.length) {
-            return res.status(400).send({ error: `Invalid ticket: ${ticketId}` })        
-        } else if (ticket.status === 'Reserved') {
-            return res.status(200).send()
-        }
-        knex('ticket')
-            .update({ reservedBy: userId, status: 'Reserved' })
-            .where('id', ticketId)
-        res.status(200).send({ ticketId: ticketId })
     })
 })
 
@@ -48,6 +25,31 @@ router.get('/ticket/:id', (req, res) => {
             return res.status(400).send({ error: `Invalid ticket: ${ticketId}` })
         }
         res.status(200).send(ticket[0])
+    })
+})
+
+router.post('/ticket/:id', (req, res) => {
+    ticketId = req.params.id
+    userId = req.body.userId
+
+    if (isNaN(ticketId)) {
+        return res.status(400).send({ error: `Invalid ticket: ${ticketId}` })        
+    } else if (isNaN(userId)) {
+        return res.status(400).send({ error: `Invalid userId: ${userId}` })
+    }
+    knex('ticket').where('id', ticketId).then(ticket => {
+        if (!ticket.length) {
+            return res.status(400).send({ error: `Invalid ticket: ${ticketId}` })        
+        } else if (ticket[0].status === 'Reserved') {
+            return res.status(400).send({ error: `Already reserved: ${ticketId}`})
+        }
+        console.log(ticket[0])
+        knex('ticket')
+            .update({ reservedBy: userId, status: 'Reserved' })
+            .where('id', ticketId)
+            .then(() => {
+                res.status(200).send({ ticketId: ticketId })
+            })
     })
 })
 
