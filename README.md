@@ -45,14 +45,14 @@ Delete an user<br/>
 `id` representing a user id
 
 ### Payment
-- **GET payement**:
+- **GET payment**:
 Get all payment informations
 
-- **POST payement/order**:
+- **POST payment/order**:
 Create a new payment with the status `onWaiting`<br/>
 `body: { userId: x (number), ticketId: x (number), price: x (number) }`
 
-- **POST payement/:id**
+- **POST payment/:id**
 Change the status of the order depending on the `funds` of the user (`Accepted`, `Rejected`)<br/>
 `id` representing an order id<br/>
 `body: { funds: x (number) }`
