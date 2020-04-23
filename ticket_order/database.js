@@ -1,21 +1,23 @@
-var knex = require('knex')({
-    client: 'pg',
-    connection: {
-        host: 'localhost',
-        database: 'postgres'
-    }
-});
-
 // var knex = require('knex')({
 //     client: 'pg',
 //     connection: {
-//         host: '172.0.0.1',
-//         port: 5432,
-//         database: 'ticket',
-//         user: 'postgres',
-//         password: '1234'
+//         host: 'localhost',
+//         // user : 'postgres',
+//         // password : 'tototo',
+//         database: 'postgres'
 //     }
 // });
+
+const knex = require('knex')({
+    client: 'pg',
+    connection: {
+        host: 'ticketdb',
+        port: 5432,
+        database: 'ticket',
+        user: 'postgres',
+        password: 'example',
+    }
+});
 
 knex.schema.hasTable('ticket').then(exist => {
     if (!exist) {

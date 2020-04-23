@@ -43,7 +43,6 @@ router.post('/ticket/:id', (req, res) => {
         } else if (ticket[0].status === 'Reserved') {
             return res.status(400).send({ error: `Already reserved: ${ticketId}`})
         }
-        console.log(ticket[0])
         knex('ticket')
             .update({ reservedBy: userId, status: 'Reserved' })
             .where('id', ticketId)

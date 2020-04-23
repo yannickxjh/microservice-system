@@ -1,8 +1,21 @@
+// var knex = require('knex')({
+//   client: 'pg',
+//   connection: {
+//     host: 'localhost',
+//     // user : 'postgres',
+//     // password : 'tototo',
+//     database: 'postgres'
+//   }
+// });
+
 var knex = require('knex')({
   client: 'pg',
   connection: {
-    host: 'localhost',
-    database: 'postgres'
+    host: 'userdb',
+    port: 5433,
+    database: 'users',
+    user: 'postgres',
+    password: 'example'
   }
 });
 
